@@ -93,4 +93,16 @@ router.get("/feed", async(req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+router.delete("/delete",async(req,res)=>{
+  try{
+    const {habitId}=req.body;
+    await Habit.findByIdAndDelete(habitId);
+    res.json( {message: "Habit Successfully deleted"});
+  }
+  catch(err){
+      res.status(500).json({ error: err.message });
+  }
+})
+
 module.exports = router;
