@@ -9,7 +9,9 @@ function App() {
   const [feed, setFeed] = useState([]);
   const userId = "67e3a1f2c123456789abcd12";
 
+const [showFeed, setShowFeed] = useState(false);
 
+{showFeed && <Feed feed={feed} />}
   const sendHabit = async () => {
     if (!habit.trim()) return;
 
@@ -95,24 +97,41 @@ const deleteHabit = async (habitId) => {
 useEffect(()=>{ getHabits(); getFeed();},[userId]);
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Habit Tracker</h2>
+    <div  style={{
+  maxWidth: "600px",
+  margin: "60px auto 40px auto",
+  padding: "20px",
+  backgroundColor: "#ffffff",
+  color: "#000",
+  borderRadius: "12px",
+  boxShadow: "0 4px 12px rgba(0,0,0,0.06)",
+
+}}>
+
+<h2>Consistency Tracker</h2>
+
+<h3>Add Habit</h3>
 <AddHabit 
 habit={habit}
 setHabit={setHabit}
 sendHabit={sendHabit}
  ></AddHabit>
 
+<h3>Your Habits</h3>
 <HabitList
   habits={habits}
   checkIn={checkIn}
   deleteHabit={deleteHabit}
 />
-      <h3>Activity Feed</h3>
-<Feed feed={feed}></Feed>
-    </div>
-    
 
+<h3>Activity Feed</h3>
+<button onClick={() => setShowFeed(!showFeed)}>
+  {showFeed ? "Hide Activity" : "Show Activity"}
+</button>
+{showFeed &&<Feed feed={feed}></Feed>}
+
+   
+ </div>
   );
 }
 

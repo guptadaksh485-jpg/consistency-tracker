@@ -2,7 +2,7 @@ import HabitCard from "./HabitCard";
 
 function HabitList({ habits, checkIn, deleteHabit }) {
   if (!habits || habits.length === 0) {
-    return <p>No habits yet</p>;
+    return  <p>No habits yet 🚀 Start building consistency!</p>;
   }
 
   return (
