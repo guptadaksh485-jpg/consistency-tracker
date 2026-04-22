@@ -3,11 +3,13 @@ import { useEffect } from "react";
 import AddHabit from "./components/Addhabit";
 import Feed from "./components/Feed";
 import HabitList from "./components/HabitList";
+import Insights from "./components/Insights";
 function App() {
   const [habit, setHabit] = useState("");
   const [habits, setHabits] = useState([]);
   const [feed, setFeed] = useState([]);
   const [target, setTarget] = useState(7);
+  const [showInsights, setShowInsights] = useState(true);
   const userId = "67e3a1f2c123456789abcd12";
 
 const [showFeed, setShowFeed] = useState(false);
@@ -130,6 +132,11 @@ setTarget={setTarget}
   checkIn={checkIn}
   deleteHabit={deleteHabit}
 />
+<h3>INSIGHTS</h3>
+<button onClick={() => setShowInsights(!showInsights)}>
+  {showInsights ? "Hide Insights" : "Show Insights"}
+</button>
+{showInsights && <Insights userId={userId} />}
 
 <h3>Activity Feed</h3>
 <button onClick={() => setShowFeed(!showFeed)}>
