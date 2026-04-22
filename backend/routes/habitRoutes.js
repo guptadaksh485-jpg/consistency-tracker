@@ -104,5 +104,40 @@ router.delete("/delete",async(req,res)=>{
       res.status(500).json({ error: err.message });
   }
 })
+router.get("/insights",async(req,res)=>{
+  try{
+  const {userId}=req.query;
+  const logs = await Log.find({ userId });
+  const habits = await Habit.find({ userId });
+  if (!logs.length) {
+  return res.json({
+    message: "No data yet"
+  });
+}
+ const last7=new Date;
+ last7.setDate(last7.getDate()-7);
+ const weeklyLogs=logs.filter(log=> new Date(log.date)>=last7);
+ const habitStats = {};
+
+weeklyLogs.forEach(logs=>{
+  const id=logs.habitId.toString();
+  if(!habitStats[id])habitStats[id]=0;
+   habitStats[id]++;
+});
+
+const habitPerformance = habits.map(h => ({
+  title: h.title,
+  done: habitStats[h._id] || 0,
+  target: h.targetPerWeek
+}));
+
+res.json({
+  habitPerformance
+});
+  }
+catch(err){
+    res.status(500).json({ error: err.message });
+}
+})
 
 module.exports = router;
