@@ -7,6 +7,7 @@ function App() {
   const [habit, setHabit] = useState("");
   const [habits, setHabits] = useState([]);
   const [feed, setFeed] = useState([]);
+  const [target, setTarget] = useState(7);
   const userId = "67e3a1f2c123456789abcd12";
 
 const [showFeed, setShowFeed] = useState(false);
@@ -21,7 +22,11 @@ const [showFeed, setShowFeed] = useState(false);
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userId, title: habit }),
+        body: JSON.stringify({
+  userId,
+  title: habit,
+  targetPerWeek: target
+}),
       });
 
       const data = await res.json();
@@ -115,6 +120,8 @@ useEffect(()=>{ getHabits(); getFeed();},[userId]);
 habit={habit}
 setHabit={setHabit}
 sendHabit={sendHabit}
+target={target}
+setTarget={setTarget}
  ></AddHabit>
 
 <h3>Your Habits</h3>

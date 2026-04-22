@@ -4,11 +4,11 @@ const Habit=require("../models/Habit");
 
 router.post("/create", async(req, res) => {
   try{
- const   {userId,title}=req.body;
+ const   {userId,title,targetPerWeek}=req.body;
  if(!userId ||!title){
   return res.status(400).json({message:"userID and title required"});
  }
- const newHabit =new Habit({userId,title});
+ const newHabit =new Habit({userId,title, targetPerWeek: targetPerWeek || 7});
 await newHabit.save();
 
     res.status(201).json({

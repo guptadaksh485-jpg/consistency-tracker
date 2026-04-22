@@ -14,7 +14,13 @@ const habitSchema = new mongoose.Schema({
   },
   lastCompleted: {
     type: Date
-  }
-}, { timestamps: true });
+  },
+  targetPerWeek:{
+  type: Number,
+  default:7
+}
+}, { timestamps: true }
+);
+
 module.exports = mongoose.model("Habit", habitSchema);
 

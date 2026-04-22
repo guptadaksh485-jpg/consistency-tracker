@@ -1,4 +1,4 @@
-function AddHabit({habit,setHabit,sendHabit}){
+function AddHabit({habit,setHabit,sendHabit,target,setTarget}){
      return (
     <div>
       <input
@@ -11,7 +11,13 @@ function AddHabit({habit,setHabit,sendHabit}){
       marginRight: "10px"
     }}
       />
-
+      <input type="number"
+        value={target}
+        onChange={(e) => setTarget(Number(e.target.value))}
+        min="1"
+        max="7"
+        style={{ width: "60px", marginRight: "10px" }}/>
+      <span style={{ marginRight: "5px" }}>x/week</span>
       <button onClick={sendHabit} style={{ marginLeft: "10px" }}>
         Add Habit
       </button>
