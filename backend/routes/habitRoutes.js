@@ -110,29 +110,50 @@ router.get("/insights",async(req,res)=>{
   const logs = await Log.find({ userId });
   const habits = await Habit.find({ userId });
   if (!logs.length) {
-  return res.json({
-    message: "No data yet"
+  return res.json({  
+    habitPerformance: [],
+    totalLogs: 0,
+    weeklyCount: 0,
+    bestHabit: null,
+    worstHabit: null
   });
 }
- const last7=new Date;
+const totalLogs=logs.length;
+ const last7=new Date();
  last7.setDate(last7.getDate()-7);
  const weeklyLogs=logs.filter(log=> new Date(log.date)>=last7);
  const habitStats = {};
-
-weeklyLogs.forEach(logs=>{
-  const id=logs.habitId.toString();
+const weeklyCount = weeklyLogs.length;
+weeklyLogs.forEach(log=>{
+  const id=log.habitId.toString();
   if(!habitStats[id])habitStats[id]=0;
    habitStats[id]++;
 });
 
-const habitPerformance = habits.map(h => ({
-  title: h.title,
-  done: habitStats[h._id] || 0,
-  target: h.targetPerWeek
-}));
+const habitPerformance = habits.map(h => {
+  const done = habitStats[h._id.toString()] || 0;
+  const target = h.targetPerWeek||1;
+  const score= target > 0 ? done / target : 0;
+  return {
+    title: h.title,
+    done,
+    target,
+   score
+  };
+});
+const bestHabit = habitPerformance.reduce((a, b) =>
+  a.score> b.score? a : b
+);
+const worstHabit = habitPerformance.reduce((a, b) =>
+  a.score < b.score ? a : b
+);
 
 res.json({
-  habitPerformance
+  habitPerformance,
+  totalLogs,
+  weeklyCount,
+  bestHabit,
+  worstHabit
 });
   }
 catch(err){
