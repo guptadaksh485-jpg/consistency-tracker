@@ -11,18 +11,7 @@ const userSchema= new mongoose.Schema({
     type:String,
     required: true
   },
-   friends: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
-    }
-  ],
-  groups: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Group"
-    }
-  ]
-}, { timestamps: true })
+  }, { timestamps: true }
+);
 
 module.exports = mongoose.model("User", userSchema);
