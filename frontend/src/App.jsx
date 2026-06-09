@@ -4,17 +4,16 @@ import AddHabit from "./components/Addhabit";
 import Feed from "./components/Feed";
 import HabitList from "./components/HabitList";
 import Insights from "./components/Insights";
+import Login from "./components/Login";
 function App() {
   const [habit, setHabit] = useState("");
   const [habits, setHabits] = useState([]);
   const [feed, setFeed] = useState([]);
   const [target, setTarget] = useState(7);
   const [showInsights, setShowInsights] = useState(true);
-  const userId = "67e3a1f2c123456789abcd12";
-
+  const [userId, setUserId] = useState(localStorage.getItem("userId"));
 const [showFeed, setShowFeed] = useState(false);
 
-{showFeed && <Feed feed={feed} />}
   const sendHabit = async () => {
     if (!habit.trim()) return;
 
@@ -100,10 +99,17 @@ const deleteHabit = async (habitId) => {
     console.error(err);
   }
 };
-
-useEffect(()=>{ getHabits(); getFeed();},[userId]);
-
+useEffect(() => {
+  if (userId && userId !== "undefined") {
+    getHabits();
+    getFeed();
+  }
+}, [userId]);
+ if (!userId) {
+  return <Login setUserId={setUserId} />;
+}
   return (
+   <div>
     <div  style={{
   maxWidth: "600px",
   margin: "60px auto 40px auto",
@@ -114,6 +120,7 @@ useEffect(()=>{ getHabits(); getFeed();},[userId]);
   boxShadow: "0 4px 12px rgba(0,0,0,0.06)",
 
 }}>
+ 
 
 <h2>Consistency Tracker</h2>
 
@@ -144,9 +151,23 @@ setTarget={setTarget}
 </button>
 {showFeed &&<Feed feed={feed}></Feed>}
 
-   
+    <button
+  onClick={() => {
+    localStorage.removeItem("userId");
+    setUserId(null);
+    setHabits([]);
+    setFeed([]);
+  }}
+>
+  Logout
+</button>
+<></>
  </div>
+ 
+
+</div>
   );
+
 }
 
 export default App;
