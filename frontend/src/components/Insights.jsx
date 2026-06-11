@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
 
-function Insights({ userId }) {
+function Insights({ token }) {
   const [data, setData] = useState(null);
 
   useEffect(() => {
     const fetchInsights = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/habits/insights?userId=${userId}`
+          `http://localhost:5000/api/habits/insights`,
+          {
+            headers:{
+              Authorization:`Bearer ${token}`
+            }
+          }
         );
         const result = await res.json();
         setData(result);
@@ -17,7 +22,7 @@ function Insights({ userId }) {
     };
 
     fetchInsights();
-  }, [userId]);
+  }, [token]);
 
   if (!data) return <p>Loading insights...</p>;
 

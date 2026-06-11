@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const Habit = require("../models/Habit");
 const Log = require("../models/Log");
 const jwt=require("jsonwebtoken");
-
+const verifyAuth = require("../middlewares/authMiddleware");
 router.post("/signup",async(req,res)=>{
     try{
         const {userName,password}=req.body;
@@ -70,6 +70,7 @@ router.post("/login", async (req, res) => {
       }
     );
 
+
     res.json({
       message: "Login successful",
       token
@@ -80,13 +81,10 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.delete("/delete", async (req, res) => {
+router.delete("/delete",verifyAuth, async (req, res) => {
   try {
-    const { userId } = req.body;
+    const userId  = req.user.userId;
 
-    if (!userId) {
-      return res.status(400).json({ message: "userId required" });
-    }
 
     await User.findByIdAndDelete(userId);
 

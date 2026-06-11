@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function Login({ setUserId }) {
+function Login({ setToken }) {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [isSignup, setIsSignup] = useState(false);
@@ -23,12 +23,11 @@ function Login({ setUserId }) {
       const data = await res.json();
      console.log(data);
  
-      const id = data.userId || data._id;
+  if (data.token) {
+  localStorage.setItem("token", data.token);
+  setToken(data.token);
+}
 
-     if (id) {
-  localStorage.setItem("userId", id);
-  setUserId(id);
-       }
  else {
   alert(data.message || "Signup/Login failed");
 }

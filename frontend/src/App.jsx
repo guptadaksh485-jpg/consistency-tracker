@@ -5,13 +5,14 @@ import Feed from "./components/Feed";
 import HabitList from "./components/HabitList";
 import Insights from "./components/Insights";
 import Login from "./components/Login";
+import DeleteUser from "./components/DeleteUser";
 function App() {
   const [habit, setHabit] = useState("");
   const [habits, setHabits] = useState([]);
   const [feed, setFeed] = useState([]);
   const [target, setTarget] = useState(7);
   const [showInsights, setShowInsights] = useState(true);
-  const [userId, setUserId] = useState(localStorage.getItem("userId"));
+  const [token, setToken] =useState(localStorage.getItem("token"));
 const [showFeed, setShowFeed] = useState(false);
 
   const sendHabit = async () => {
@@ -22,9 +23,10 @@ const [showFeed, setShowFeed] = useState(false);
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+         Authorization: `Bearer ${token}`
         },
         body: JSON.stringify({
-  userId,
+
   title: habit,
   targetPerWeek: target
 }),
@@ -41,7 +43,14 @@ const [showFeed, setShowFeed] = useState(false);
 
   const getHabits= async()=>{
     try {
-  const res=await fetch( `http://localhost:5000/api/habits?userId=${userId}`); 
+      const token=localStorage.getItem("token");
+  const res=await fetch( `http://localhost:5000/api/habits`,{
+
+  headers:{
+    Authorization: `Bearer ${token}`
+  }
+
+  }); 
     if (!res.ok) { throw new Error("Request failed"); }
      const data=await res.json();
       setHabits(data.habits);
@@ -54,9 +63,15 @@ const [showFeed, setShowFeed] = useState(false);
   
 const getFeed=async()=>{
    try{
-   const feed=await fetch(`http://localhost:5000/api/habits/feed?userId=${userId}`);
-   const data=await feed.json();
-   setFeed(data.logs);
+    const res = await fetch("http://localhost:5000/api/habits/feed", {
+  headers: {
+    Authorization: `Bearer ${token}`
+  }
+});
+
+const data = await res.json();
+setFeed(data.logs);
+  
    }
    
    catch(err){
@@ -70,8 +85,11 @@ const checkIn=async(habitId)=>{
       method:"POST",
       headers:{
         "Content-Type": "application/json",
+        
+  Authorization: `Bearer ${token}`
+
       },
-      body:JSON.stringify({habitId,userId})
+      body:JSON.stringify({habitId})
     });
     await getHabits();
     await getFeed();
@@ -87,6 +105,8 @@ const deleteHabit = async (habitId) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        
+  Authorization: `Bearer ${token}`
       },
       body: JSON.stringify({ habitId }),
     });
@@ -100,14 +120,16 @@ const deleteHabit = async (habitId) => {
   }
 };
 useEffect(() => {
-  if (userId && userId !== "undefined") {
-    getHabits();
-    getFeed();
-  }
-}, [userId]);
- if (!userId) {
-  return <Login setUserId={setUserId} />;
+  if (!token) return;
+
+  getHabits();
+  getFeed();
+}, [token]);
+
+if (!token) {
+  return <Login setToken={setToken} />;
 }
+
   return (
    <div>
     <div  style={{
@@ -143,18 +165,23 @@ setTarget={setTarget}
 <button onClick={() => setShowInsights(!showInsights)}>
   {showInsights ? "Hide Insights" : "Show Insights"}
 </button>
-{showInsights && <Insights userId={userId} />}
+{showInsights && <Insights token={token} />}
 
 <h3>Activity Feed</h3>
 <button onClick={() => setShowFeed(!showFeed)}>
   {showFeed ? "Hide Activity" : "Show Activity"}
 </button>
 {showFeed &&<Feed feed={feed}></Feed>}
-
+<DeleteUser
+  token={token}
+  setToken={setToken}
+  setHabits={setHabits}
+  setFeed={setFeed}
+/>
     <button
   onClick={() => {
-    localStorage.removeItem("userId");
-    setUserId(null);
+    localStorage.removeItem("token");
+    setToken(null);
     setHabits([]);
     setFeed([]);
   }}
