@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import AddHabit from "./components/Addhabit";
+import AddHabit from "./components/AddHabit";
 import Feed from "./components/Feed";
 import HabitList from "./components/HabitList";
 import Insights from "./components/Insights";
