@@ -8,8 +8,8 @@ function Login({ setToken }) {
   const handleSubmit = async () => {
     try {
       const url = isSignup
-        ? "http://localhost:5000/api/auth/signup"
-        : "http://localhost:5000/api/auth/login";
+        ? "https://consistency-tracker-zwqt.onrender.com/api/auth/signup"
+        : "https://consistency-tracker-zwqt.onrender.com/api/auth/login";
  
 
       const res = await fetch(url, {

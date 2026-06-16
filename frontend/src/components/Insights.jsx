@@ -7,7 +7,7 @@ function Insights({ token }) {
     const fetchInsights = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/habits/insights`,
+          `https://consistency-tracker-zwqt.onrender.com/api/habits/insights`,
           {
             headers:{
               Authorization:`Bearer ${token}`

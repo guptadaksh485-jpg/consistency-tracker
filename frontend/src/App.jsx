@@ -19,7 +19,7 @@ const [showFeed, setShowFeed] = useState(false);
     if (!habit.trim()) return;
 
     try {
-      const res = await fetch("http://localhost:5000/api/habits/create", {
+      const res = await fetch("https://consistency-tracker-zwqt.onrender.com/api/habits/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,7 +44,7 @@ const [showFeed, setShowFeed] = useState(false);
   const getHabits= async()=>{
     try {
       const token=localStorage.getItem("token");
-  const res=await fetch( `http://localhost:5000/api/habits`,{
+  const res=await fetch( `https://consistency-tracker-zwqt.onrender.com/api/habits`,{
 
   headers:{
     Authorization: `Bearer ${token}`
@@ -63,7 +63,7 @@ const [showFeed, setShowFeed] = useState(false);
   
 const getFeed=async()=>{
    try{
-    const res = await fetch("http://localhost:5000/api/habits/feed", {
+    const res = await fetch("https://consistency-tracker-zwqt.onrender.com/api/habits/feed", {
   headers: {
     Authorization: `Bearer ${token}`
   }
@@ -101,7 +101,7 @@ const checkIn=async(habitId)=>{
 }
 const deleteHabit = async (habitId) => {
   try {
-    const res = await fetch("http://localhost:5000/api/habits/delete", {
+    const res = await fetch("https://consistency-tracker-zwqt.onrender.com/api/habits/delete", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

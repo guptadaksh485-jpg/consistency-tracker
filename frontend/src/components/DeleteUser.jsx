@@ -9,7 +9,7 @@ function DeleteUser({token, setToken, setHabits, setFeed }){
     if (!confirmDelete) return;
 
     try {
-      await fetch("http://localhost:5000/api/auth/delete", {
+      await fetch("https://consistency-tracker-zwqt.onrender.com/api/auth/delete", {
         method: "DELETE",
         headers: {
 
