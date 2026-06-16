@@ -81,7 +81,7 @@ setFeed(data.logs);
  
 const checkIn=async(habitId)=>{
   try{
-    await fetch("http://localhost:5000/api/habits/checkin",{
+    await fetch("https://consistency-tracker-zwqt.onrender.com/api/habits/checkin",{
       method:"POST",
       headers:{
         "Content-Type": "application/json",
