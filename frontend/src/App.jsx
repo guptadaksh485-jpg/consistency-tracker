@@ -14,6 +14,7 @@ function App() {
   const [showInsights, setShowInsights] = useState(true);
   const [token, setToken] =useState(localStorage.getItem("token"));
 const [showFeed, setShowFeed] = useState(false);
+const [refreshInsights, setRefreshInsights] = useState(0);
 
   const sendHabit = async () => {
     if (!habit.trim()) return;
@@ -35,6 +36,7 @@ const [showFeed, setShowFeed] = useState(false);
       const data = await res.json();
       console.log(data);
     await getHabits();
+    setRefreshInsights(prev => prev + 1);
       setHabit(""); 
     } catch (err) {
       console.error(err);
@@ -93,6 +95,7 @@ const checkIn=async(habitId)=>{
     });
     await getHabits();
     await getFeed();
+    setRefreshInsights(prev => prev + 1);
   }
   catch(err){
     console.error(err);
@@ -115,6 +118,7 @@ const deleteHabit = async (habitId) => {
 
     await getHabits();
     await getFeed();
+    setRefreshInsights(prev => prev + 1);
   } catch (err) {
     console.error(err);
   }
@@ -165,7 +169,7 @@ setTarget={setTarget}
 <button onClick={() => setShowInsights(!showInsights)}>
   {showInsights ? "Hide Insights" : "Show Insights"}
 </button>
-{showInsights && <Insights token={token} />}
+{showInsights && <Insights token={token} refreshInsights={refreshInsights} />}
 
 <h3>Activity Feed</h3>
 <button onClick={() => setShowFeed(!showFeed)}>

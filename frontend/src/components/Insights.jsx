@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function Insights({ token }) {
+function Insights({ token ,refreshInsights}) {
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ function Insights({ token }) {
     };
 
     fetchInsights();
-  }, [token]);
+  }, [token, refreshInsights]);
 
   if (!data) return <p>Loading insights...</p>;
 
