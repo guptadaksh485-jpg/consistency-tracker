@@ -124,7 +124,8 @@ router.get("/insights",verifyAuth,async(req,res)=>{
   const userId=req.user.userId;
   const logs = await Log.find({ userId });
   const habits = await Habit.find({ userId });
-  if (!logs.length) {
+ 
+  if (!logs.length || !habits.length) {
   return res.json({  
     habitPerformance: [],
     totalLogs: 0,

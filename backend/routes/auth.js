@@ -6,7 +6,9 @@ const Habit = require("../models/Habit");
 const Log = require("../models/Log");
 const jwt=require("jsonwebtoken");
 const verifyAuth = require("../middlewares/authMiddleware");
-router.post("/signup",async(req,res)=>{
+const { default: rateLimit } = require("express-rate-limit");
+const authLimiter = require("../middlewares/rateLimiter");
+router.post("/signup",authLimiter,async(req,res)=>{
     try{
         const {userName,password}=req.body;
         if(!userName || !password) {
@@ -40,7 +42,7 @@ router.post("/signup",async(req,res)=>{
         res.status(500).json({ error: err.message });
     }
 })
-router.post("/login", async (req, res) => {
+router.post("/login",authLimiter, async (req, res) => {
   try {
     const { userName, password } = req.body;
 

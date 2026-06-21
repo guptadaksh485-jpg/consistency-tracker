@@ -1,30 +1,17 @@
 import { useEffect, useState } from "react";
+import * as api from "../api";
 
-function Insights({ token ,refreshInsights}) {
+function Insights({ refreshInsights }) {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    const fetchInsights = async () => {
-      try {
-        const res = await fetch(
-          `https://consistency-tracker-zwqt.onrender.com/api/habits/insights`,
-          {
-            headers:{
-              Authorization:`Bearer ${token}`
-            }
-          }
-        );
-        const result = await res.json();
-        setData(result);
-      } catch (err) {
-        console.error(err);
-      }
-    };
+    api.getInsights().then(setData).catch(console.error);
+  }, [refreshInsights]);
 
-    fetchInsights();
-  }, [token, refreshInsights]);
+
 
   if (!data) return <p>Loading insights...</p>;
+
 
   if (!data.habitPerformance) {
     return (
