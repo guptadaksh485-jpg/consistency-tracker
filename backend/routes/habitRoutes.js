@@ -108,6 +108,11 @@ router.delete("/delete",verifyAuth,async(req,res)=>{
       _id: habitId,
       userId
     });
+
+await Log.deleteMany({
+  habitId,
+  userId
+});
     res.json( {message: "Habit Successfully deleted"});
   }
   catch(err){
