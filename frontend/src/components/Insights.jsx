@@ -28,9 +28,11 @@ function Insights({ token ,refreshInsights}) {
 
   if (!data.habitPerformance) {
     return (
-      <p style={{ marginTop: "20px" }}>
-        No insights yet. Start tracking habits 
-      </p>
+      <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm mt-4">
+  <p className="text-slate-500">
+    No insights yet. Start tracking habits.
+  </p>
+</div>
     );
   }
 

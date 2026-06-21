@@ -176,7 +176,7 @@ target={target}
 setTarget={setTarget}
  ></AddHabit>
 
-<div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
+<div className="bg-white rounded-xl border border-slate-200 p-3 shadow-sm">
   <div className="flex justify-between items-center mb-3">
     <h3 className="text-lg font-semibold">
       Activity Feed
@@ -185,7 +185,7 @@ setTarget={setTarget}
   onClick={() => setShowFeed(!showFeed)}
   className="bg-slate-800 hover:bg-slate-900 text-white px-3 py-1.5 rounded-lg text-sm"
 >
-  {showFeed ? "Hide" : "Show"}
+  {showFeed ? "Hide" : "View"}
 </button>
   </div>
   
@@ -206,14 +206,14 @@ setTarget={setTarget}
     Logout
   </button>
 
+</div>
+   
   <DeleteUser
     token={token}
     setToken={setToken}
     setHabits={setHabits}
     setFeed={setFeed}
   />
-</div>
-   
  </div>
  
 

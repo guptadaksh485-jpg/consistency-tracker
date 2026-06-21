@@ -3,14 +3,17 @@
 function DeleteUser({token, setToken, setHabits, setFeed }){
 
     return (<button
-    style={{
-  background: "transparent",
-  color: "#dc2626",
-  border: "none",
-  boxShadow: "none",
-  padding: 0,
-  fontWeight: "600",
-}}
+    className="
+    mt-5
+text-red-600
+hover:text-red-700
+font-medium
+underline-offset-2
+hover:underline
+bg-transparent
+p-0
+shadow-none 
+"
   onClick={async () => {
     const confirmDelete = window.confirm("Delete account permanently?");
     if (!confirmDelete) return;
