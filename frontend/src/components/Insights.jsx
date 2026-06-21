@@ -29,57 +29,80 @@ function Insights({ token ,refreshInsights}) {
   if (!data.habitPerformance) {
     return (
       <p style={{ marginTop: "20px" }}>
-        No insights yet. Start tracking habits 🚀
+        No insights yet. Start tracking habits 
       </p>
     );
   }
 
   return (
-    <div style={{ marginTop: "20px" }}>
-      <h3>📊 Insights</h3>
 
-      <div style={{ marginBottom: "15px" }}>
-        <h4>Total Logs: {data.totalLogs}</h4>
-        <h4>This Week: {data.weeklyCount}</h4>
-        <h4>🏆 Best Habit: {data.bestHabit?.title || "N/A"}</h4>
-        <h4>⚠ Worst Habit: {data.worstHabit?.title || "N/A"}</h4>
-      </div>
+  <div className="mt-5">
 
-      {data.habitPerformance.map((h, i) => (
+    <div className="grid md:grid-cols-2 grid-cols-1 gap-4 mb-5">
+  <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm text-center">
+    <p className="text-sm text-slate-500">Total Logs</p>
+    <h3 className="text-2xl font-bold mt-1">{data.totalLogs}</h3>
+  </div>
+
+  <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm text-center">
+    <p className="text-sm text-slate-500">This Week</p>
+    <h3 className="text-2xl font-bold mt-1">{data.weeklyCount}</h3>
+  </div>
+
+  <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm text-center">
+    <p className="text-sm text-slate-500">Best Habit</p>
+    <h3 className="font-semibold mt-1">
+      {data.bestHabit?.title || "N/A"}
+    </h3>
+  </div>
+
+  <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm text-center">
+    <p className="text-sm text-slate-500">Worst Habit</p>
+    <h3 className="font-semibold mt-1">
+      {data.worstHabit?.title || "N/A"}
+    </h3>
+  </div>
+
+</div>
+    {data.habitPerformance.map((h, i) => {
+      const percent = Math.min(100, Math.round(h.score * 100));
+
+      return (
         <div
           key={i}
-          style={{
-            marginBottom: "10px",
-            padding: "12px",
-            borderRadius: "10px",
-            backgroundColor: "#ffffff",
-            boxShadow: "0 2px 6px rgba(0,0,0,0.05)"
-          }}
+          className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm mb-3"
         >
-          <strong>{h.title}</strong>
+          <div className="flex justify-between items-center mb-2">
+            <div>
+              <h4 className="font-semibold">{h.title}</h4>
+              <p className="text-sm text-slate-500">
+                {h.done}/{h.target}
+              </p>
+            </div>
 
-          <p
-            style={{
-              margin: "5px 0",
-              color:
-                h.score >= 1
-                  ? "green"
-                  : h.score >= 0.6
-                  ? "orange"
-                  : "red"
-            }}
-          >
-            {Math.min(100, Math.round(h.score * 100))}% this week
-          </p>
+            <span
+              className={`font-semibold ${
+                percent >= 100
+                  ? "text-green-600"
+                  : percent >= 60
+                  ? "text-orange-500"
+                  : "text-red-500"
+              }`}
+            >
+              {percent}%
+            </span>
+          </div>
 
-          
-          <p style={{ fontSize: "12px", color: "#555" }}>
-            {h.done} / {h.target}
-          </p>
+          <div className="w-full bg-slate-200 h-2 rounded-full">
+            <div
+              className="bg-blue-600 h-2 rounded-full transition-all duration-500"
+              style={{ width: `${percent}%` }}
+            />
+          </div>
         </div>
-      ))}
-    </div>
-  );
-}
+      );
+    })}
+  </div>);}
+
 
 export default Insights;

@@ -1,26 +1,65 @@
 function AddHabit({habit,setHabit,sendHabit,target,setTarget}){
      return (
-    <div>
-      <input
+      <div
+      className="
+      bg-white
+      border
+      border-slate-200
+      rounded-xl
+      py-2 px-4
+      shadow-sm
+      mb-6
+      "
+    >
+
+ <div className="flex items-center gap-3">
+   <input
         value={habit}
         onChange={(e) => setHabit(e.target.value)}
-        placeholder="Enter habit"
-          style={{
-      padding: "8px",
-      width: "70%",
-      marginRight: "10px"
-    }}
+        placeholder="Read books, Gym, Meditation..."
+         className="
+          flex-1
+          border
+          border-slate-300
+          rounded-lg
+          px-3
+          py-2
+          focus:outline-none
+          focus:ring-2
+          focus:ring-blue-500
+          "
       />
+      
       <input type="number"
         value={target}
         onChange={(e) => setTarget(Number(e.target.value))}
         min="1"
         max="7"
-        style={{ width: "60px", marginRight: "10px" }}/>
-      <span style={{ marginRight: "5px" }}>x/week</span>
-      <button onClick={sendHabit} style={{ marginLeft: "10px" }}>
+          className="
+          w-20
+          border
+          border-slate-300
+          rounded-lg
+          px-3
+          py-2
+          "
+    />
+
+      <button onClick={sendHabit} 
+        className="
+          bg-blue-600
+          hover:bg-blue-700
+          text-white
+          px-4
+          py-2
+          rounded-lg
+          font-medium
+          "
+      >
         Add Habit
       </button>
+ </div>
+     
       </div>
      )
 }

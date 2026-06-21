@@ -136,22 +136,39 @@ if (!token) {
 
   return (
    <div>
-    <div  style={{
-  maxWidth: "600px",
-  margin: "60px auto 40px auto",
-  padding: "20px",
-  backgroundColor: "#ffffff",
-  color: "#000",
-  borderRadius: "12px",
-  boxShadow: "0 4px 12px rgba(0,0,0,0.06)",
+   <div className="max-w-5xl mx-auto px-6 py-8">
+ <h1
+  className="text-4xl font-bold mb-2 text-slate-900"
+>
+  Consistency Tracker
+</h1>
+<p
+ className="text-slate-500 mb-8"
+>
+  Track habits and stay consistent.
+</p>
 
-}}>
- 
 
-<h2>Consistency Tracker</h2>
 
-<h3>Add Habit</h3>
-<AddHabit 
+<h3 className="text-2xl font-semibold text-slate-800 mt-6 mb-3">Insights</h3>
+<button  
+  className="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-lg"
+onClick={() => setShowInsights(!showInsights)}>
+  {showInsights ? "Hide Insights" : "Show Insights"}
+</button>
+{showInsights && <Insights token={token} refreshInsights={refreshInsights} />}
+
+
+
+
+<h3 className="text-2xl font-semibold text-slate-800 mt-6 mb-3">Your Habits</h3>
+<HabitList
+  habits={habits}
+  checkIn={checkIn}
+  deleteHabit={deleteHabit}
+/>
+
+ <AddHabit 
 habit={habit}
 setHabit={setHabit}
 sendHabit={sendHabit}
@@ -159,40 +176,44 @@ target={target}
 setTarget={setTarget}
  ></AddHabit>
 
-<h3>Your Habits</h3>
-<HabitList
-  habits={habits}
-  checkIn={checkIn}
-  deleteHabit={deleteHabit}
-/>
-<h3>INSIGHTS</h3>
-<button onClick={() => setShowInsights(!showInsights)}>
-  {showInsights ? "Hide Insights" : "Show Insights"}
-</button>
-{showInsights && <Insights token={token} refreshInsights={refreshInsights} />}
-
-<h3>Activity Feed</h3>
-<button onClick={() => setShowFeed(!showFeed)}>
-  {showFeed ? "Hide Activity" : "Show Activity"}
-</button>
-{showFeed &&<Feed feed={feed}></Feed>}
-<DeleteUser
-  token={token}
-  setToken={setToken}
-  setHabits={setHabits}
-  setFeed={setFeed}
-/>
-    <button
-  onClick={() => {
-    localStorage.removeItem("token");
-    setToken(null);
-    setHabits([]);
-    setFeed([]);
-  }}
+<div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
+  <div className="flex justify-between items-center mb-3">
+    <h3 className="text-lg font-semibold">
+      Activity Feed
+    </h3>
+<button
+  onClick={() => setShowFeed(!showFeed)}
+  className="bg-slate-800 hover:bg-slate-900 text-white px-3 py-1.5 rounded-lg text-sm"
 >
-  Logout
+  {showFeed ? "Hide" : "Show"}
 </button>
-<></>
+  </div>
+  
+  {showFeed && <Feed feed={feed} />}
+</div>
+<div className="h-10" />
+<div className="flex gap-3 mt-8">
+  <button
+
+  className="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-lg"
+    onClick={() => {
+      localStorage.removeItem("token");
+      setToken(null);
+      setHabits([]);
+      setFeed([]);
+    }}
+  >
+    Logout
+  </button>
+
+  <DeleteUser
+    token={token}
+    setToken={setToken}
+    setHabits={setHabits}
+    setFeed={setFeed}
+  />
+</div>
+   
  </div>
  
 

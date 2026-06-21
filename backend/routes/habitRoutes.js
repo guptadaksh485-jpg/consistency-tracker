@@ -89,7 +89,7 @@ router.get("/feed", verifyAuth,async(req, res) => {
  try{
   const userId=req.user.userId;
  
-  const logs=await Log.find({userId}).sort({date:-1}).limit(10).populate("habitId");
+  const logs=await Log.find({userId}).sort({date:-1}).limit(5).populate("habitId");
    res.json({
       message: "Feed fetched successfully",
       logs
