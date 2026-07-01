@@ -18,6 +18,10 @@ const habitSchema = new mongoose.Schema({
   targetPerWeek:{
   type: Number,
   default:7
+},
+isPublic: {
+    type: Boolean,
+    default: true
 }
 }, { timestamps: true }
 );

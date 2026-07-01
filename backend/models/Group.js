@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-new mongoose.Schema({
+const groupSchema=new mongoose.Schema({
   name: {
     type: String,
     required: true
@@ -7,12 +7,19 @@ new mongoose.Schema({
   members: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
+      ref: "User",
+      required: true
     }
   ],
+ inviteCode:{
+  type:String,
+  required:true,
+  unique:true
+ }, 
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
+    ref: "User",
+      required: true
   }
 }, { timestamps: true });
 

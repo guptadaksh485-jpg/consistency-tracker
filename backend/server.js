@@ -12,7 +12,8 @@ const authRoutes = require("./routes/auth");
 app.use("/api/auth", authRoutes);
 const habitRoutes = require("./routes/habitRoutes");
 app.use("/api/habits", habitRoutes);
-
+const groupRoutes=require("./routes/groupRoutes");
+app.use("/api/groups",groupRoutes);
 
 app.get("/", (req, res) => {
   res.send("Backend running");
